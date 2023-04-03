@@ -5,7 +5,141 @@ let demoData = {"records": [{"so2":"0.9","status":"普通","pm2.5":"21","pm10_av
 // await getData()
 // test json data
 console.log(demoData["records"][0])
+  
+if (config.runsInWidget) {
+  
+    Script.setWidget(createWidget())
 
+} else {
+
+    let widget = createSamllWidget()
+    widget.presentMedium()
+
+}
+
+function createWidget() {
+
+    const widgetSize = config.widgetFamily
+
+    switch (widgetSize) {
+        case 'small':
+            return createSamllWidget()
+            break
+        
+        case 'medium':
+            return createSamllWidget()
+        //       return createMediumWidget()
+            break
+        
+        case 'large':
+            return createSamllWidget()
+        //       return createLargeWidget()
+            break
+        
+        default:
+            return createDefaultWidget()
+        
+    }
+
+}
+  
+function createSamllWidget() {
+
+    let widget = new ListWidget()
+    let gradient = new LinearGradient()
+    gradient.locations = [0, 1]
+    gradient.colors = [
+        new Color("#050010"),
+        new Color("#660000")
+    ]
+    //   gradient.colors = [
+    //     new Color("#992244"),
+    //     new Color("#990011")
+    //   ]
+    //   widget.backgroundColor = new Color("#000000")
+    widget.backgroundGradient = gradient
+
+    let titleStack = widget.addStack()
+    titleStack.size = new Size(0, 12)
+    //   titleStack.setPadding(0, 10, 0, 10)
+    let titleText = titleStack.addText("AQI 湖口")
+    titleText.font = Font.boldSystemFont(12)
+    titleText.leftAlignText()
+    titleText.textOpacity = 0.5
+    titleStack.addSpacer()
+    let locationText = titleStack.addText("☁️")
+    locationText.font = Font.boldSystemFont(12)
+    locationText.rightAlignText()
+
+    //   widget.addSpacer()
+
+    let aqiStack = widget.addStack()
+    //   aqiStack.setPadding(0, 10, 0, 0)
+    let aqiText = aqiStack.addText("164")
+    aqiText.font = Font.boldSystemFont(50)
+    aqiText.leftAlignText()
+
+    //   widget.addSpacer()
+
+    let pollutantStack = widget.addStack()
+    pollutantStack.size = new Size(0, 18)
+    //   pollutantStack.setPadding(0, 10, 0, 10)
+    //   pollutantStack.addSpacer(50)
+    let pollutantText = pollutantStack.addText("PM2.5")
+    pollutantText.font = Font.boldSystemFont(18)
+    pollutantText.leftAlignText()
+    pollutantStack.addSpacer()
+
+    widget.addSpacer()
+
+    let otherTitleStack = widget.addStack()
+    //   otherTitleStack.size = new Size(0, 12)
+    //   otherTitleStack.setPadding(0, 10, 0, 10)
+
+    let windStack = otherTitleStack.addStack()
+    windStack.layoutVertically()
+    let windText = windStack.addText("東南風 ↖")
+    windText.font = Font.boldSystemFont(10)
+    windText.textOpacity = 0.5
+
+    let windText2 = windStack.addText("2.5 m/s")
+    windText2.font = Font.boldSystemFont(10)
+    windText2.textOpacity = 0.5
+
+    otherTitleStack.addSpacer()
+
+    let updateTimeText = otherTitleStack.addText("14:30");
+    updateTimeText.font = Font.boldSystemFont(10)
+    updateTimeText.textOpacity = 0.5
+    otherTitleStack.bottomAlignContent()
+
+    return widget
+
+}
+
+function createMediumWidget() {
+
+}
+
+function createLargeWidget() {
+
+}
+
+function createDefaultWidget() {
+
+}
+
+function dynamicBackground() {
+//   let gradient = new LinearGradient()
+//   gradient.locations = [0, 1]
+//   gradient.colors = [
+//     new Color("#b00a0fe6"),
+//     new Color("#b00a0fb3")
+//   ]
+//   widget.backgroundColor = new Color("#b00a0f")
+//   widget.backgroundGradient = gradient
+}
+  
 async function getData() {
 
     let req = new Request(API_URL)
@@ -18,10 +152,7 @@ async function getData() {
         throw error
     }
 
-}
+}  
 
-
-
-
-
-
+  
+  
