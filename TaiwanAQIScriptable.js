@@ -126,7 +126,12 @@ function createLargeWidget() {
 function createDefaultWidget() {
 
 }
-
+/**
+ * 藉由aqi數值，生成對應空氣品質的背景。
+ * 
+ * @param {Number} aqi aqi的數值。
+ * @returns Scriptable 的漸層色彩物件。
+ */
 function aqiBackgroundColor(aqi) {
   
     const aqiLevel = new Array(
@@ -170,15 +175,23 @@ function aqiBackgroundColor(aqi) {
 
     const aqiGradient = aqiLevel.find(([aqiThreshold, colors]) => {
         return aqi <= aqiThreshold
-    })[1]
+    })[1] // resoult array[0] is aqi value, array[1] is colorCodes.
     
     const lightColorCodes = [aqiGradient.lightTopColorCode, aqiGradient.lightBottomColorCode]
     const darkColorCodes = [aqiGradient.darkTopColorCode, aqiGradient.darkBottomColorCode]
 
     return getGradient(lightColorCodes, darkColorCodes)
-    
+
 }
 
+/**
+ * 生成 Scritable 的漸層背景。
+ * 
+ * @param {[String]} lightColorCodes 輸入一到兩組RGB色碼，ex. ["#ffffff"]、["#dd0000", "#bb3300"]。
+ * @param {[String]} darkColorCodes 輸入一到兩組RGB色碼，ex. ["#ffffff"]、["#dd0000", "#bb3300"]。如果不輸入即套用 lightColorCodes。
+ * @param {[Number]} location 輸入數字來表示間曾範圍。
+ * @returns Scritable 漸層色彩物件。
+ */
 function getGradient(lightColorCodes = undefined, darkColorCodes = undefined, location = [0, 0.6]) {
   
     const gradient = new LinearGradient()
