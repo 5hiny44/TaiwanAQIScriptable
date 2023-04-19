@@ -47,18 +47,8 @@ function createWidget() {
 function createSamllWidget() {
 
     let widget = new ListWidget()
-    let gradient = new LinearGradient()
-    gradient.locations = [0, 1]
-    gradient.colors = [
-        new Color("#050010"),
-        new Color("#660000")
-    ]
-    //   gradient.colors = [
-    //     new Color("#992244"),
-    //     new Color("#990011")
-    //   ]
-    //   widget.backgroundColor = new Color("#000000")
-    widget.backgroundGradient = gradient
+    
+    widget.backgroundGradient = aqiBackgroundColor(aqi)
 
     let titleStack = widget.addStack()
     titleStack.size = new Size(0, 16)
@@ -137,16 +127,80 @@ function createDefaultWidget() {
 
 }
 
-function dynamicBackground() {
-//   let gradient = new LinearGradient()
-//   gradient.locations = [0, 1]
-//   gradient.colors = [
-//     new Color("#b00a0fe6"),
-//     new Color("#b00a0fb3")
-//   ]
-//   widget.backgroundColor = new Color("#b00a0f")
-//   widget.backgroundGradient = gradient
+function aqiBackgroundColor(aqi) {
+  
+    const aqiLevel = new Array(
+        [50, {
+            lightTopColorCode: "#018d81", 
+            lightBottomColorCode: "#139a3a",
+            darkTopColorCode: "#064e54",
+            darkBottomColorCode: "#085730"
+        }],
+        [100, {
+            lightTopColorCode: "#c7cc35", 
+            lightBottomColorCode: "#f2b844",
+            darkTopColorCode: "#4d4d02",
+            darkBottomColorCode: "#664705"
+        }],
+        [150, {
+            lightTopColorCode: "#e3a00e", 
+            lightBottomColorCode: "#e05924",
+            darkTopColorCode: "#804c09",
+            darkBottomColorCode: "#802b09"
+        }],
+        [200, {
+            lightTopColorCode: "#ed5826", 
+            lightBottomColorCode: "#c70606",
+            darkTopColorCode: "#701303",
+            darkBottomColorCode: "#70031d"
+        }],
+        [300, {
+            lightTopColorCode: "#c71e7a", 
+            lightBottomColorCode: "#960aa6",
+            darkTopColorCode: "#52094f",
+            darkBottomColorCode: "#460966"
+        }],
+        [500, {
+            lightTopColorCode: "#6b5463", 
+            lightBottomColorCode: "#7d3736",
+            darkTopColorCode: "#36252b",
+            darkBottomColorCode: "#33150d"
+        }]
+    )
+
+    const aqiGradient = aqiLevel.find(([aqiThreshold, colors]) => {
+        return aqi <= aqiThreshold
+    })[1]
+    
+    const lightColorCodes = [aqiGradient.lightTopColorCode, aqiGradient.lightBottomColorCode]
+    const darkColorCodes = [aqiGradient.darkTopColorCode, aqiGradient.darkBottomColorCode]
+
+    return getGradient(lightColorCodes, darkColorCodes)
+    
 }
+
+function getGradient(lightColorCodes = undefined, darkColorCodes = undefined, location = [0, 0.6]) {
+  
+    const gradient = new LinearGradient()
+    gradient.locations = location
+
+    lightColorCodes = lightColorCodes || darkColorCodes
+    darkColorCodes = darkColorCodes || lightColorCodes
+
+    lightTopColor = new Color(lightColorCodes[0])
+    lightBottomColor = new Color(lightColorCodes[1] || lightColorCodes[0])
+    darkTopColor = new Color(darkColorCodes[0])
+    darkBottomColor = new Color(darkColorCodes[1] || darkColorCodes[0])
+
+    gradient.colors = [
+        Color.dynamic(lightTopColor, darkTopColor),
+        Color.dynamic(lightBottomColor, darkBottomColor)
+    ]
+
+    return gradient
+  
+}
+
   
 async function getData() {
 
