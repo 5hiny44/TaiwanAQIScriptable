@@ -13,34 +13,35 @@ if (config.runsInWidget) {
 
 } else {
 
-    let widget = createSamllWidget()
+    const widget = createSamllWidget()
     widget.presentMedium()
 
 }
 
-function createWidget() {
+/**
+ * 依照 size 需求，生成 AQI 專用 widget 物件。
+ * 
+ * @param {String} size 預設偵測是否存在 widget 情境，自動偵測 widget size，也可自行輸入 size 大小，分別為: small、medium、large、extraLarge。
+ * @returns widge 物件。
+ */
+function createWidget(size = config.widgetFamily) {
 
-    const widgetSize = config.widgetFamily
+    const widgetSize = size || "small"
 
-    switch (widgetSize) {
-        case 'small':
-            return createSamllWidget()
-            break
-        
-        case 'medium':
-            return createSamllWidget()
-        //       return createMediumWidget()
-            break
-        
-        case 'large':
-            return createSamllWidget()
-        //       return createLargeWidget()
-            break
-        
-        default:
-            return createDefaultWidget()
-        
-    }
+    const widgeSizeMap = new Map([
+        ["small", createSamllWidget()],
+        ["medium", createMediumWidget()],
+        ["large", createLargeWidget()],
+        ["extraLarge", createExtraLargeWidget()]
+    ])
+    
+    const widget = widgeSizeMap.get(widgetSize)
+
+    if(!widget) { 
+        throw new Error(`Widget size mapping is failed. widgetSize: ${widgetSize}`)
+    } 
+    
+    return widget
 
 }
   
@@ -117,16 +118,17 @@ function createSamllWidget() {
 }
 
 function createMediumWidget() {
-
+    return createSamllWidget() //test
 }
 
 function createLargeWidget() {
-
+    return createSamllWidget() //test
 }
 
-function createDefaultWidget() {
-
+function createExtraLargeWidget() {
+    return createSamllWidget() //test
 }
+
 /**
  * 藉由aqi數值，生成對應空氣品質的背景。
  * 
