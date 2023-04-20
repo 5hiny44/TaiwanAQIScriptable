@@ -98,17 +98,17 @@ function createSamllWidget() {
     windStack.bottomAlignContent()
     windStack.layoutVertically()
     let windText = windStack.addText("東南風 ↖")
-    windText.font = Font.boldSystemFont(10)
+    windText.font = Font.boldSystemFont(11)
     windText.textOpacity = 0.7
 
     let windText2 = windStack.addText("2.5 m/s")
-    windText2.font = Font.boldSystemFont(10)
+    windText2.font = Font.boldSystemFont(11)
     windText2.textOpacity = 0.7
 
     otherTitleStack.addSpacer()
 
     let updateTimeText = otherTitleStack.addText("14:30");
-    updateTimeText.font = Font.boldSystemFont(10)
+    updateTimeText.font = Font.boldSystemFont(11)
     updateTimeText.textOpacity = 0.7
     otherTitleStack.bottomAlignContent()
 
