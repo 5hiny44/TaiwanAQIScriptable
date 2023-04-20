@@ -49,11 +49,11 @@ function createSamllWidget() {
     let widget = new ListWidget()
     
     widget.backgroundGradient = aqiBackgroundColor(aqi)
-
+    
     let titleStack = widget.addStack()
-    titleStack.size = new Size(0, 16)
+    titleStack.size = new Size(0, 14)
     //   titleStack.setPadding(0, 10, 0, 10)
-    titleStack.bottomAlignContent()
+    titleStack.topAlignContent()
     let titleText = titleStack.addText("AQI 湖口")
     titleText.font = Font.boldSystemFont(12)
     titleText.leftAlignText()
@@ -66,8 +66,9 @@ function createSamllWidget() {
     //   widget.addSpacer()
 
     let aqiStack = widget.addStack()
-    aqiStack.size = new Size(0, 66)
-    //   aqiStack.setPadding(0, 10, 0, 0)
+    aqiStack.size = new Size(0, 64)
+    
+//     aqiStack.setPadding(0, 100, 0, 0)
     aqiStack.topAlignContent()
     let aqiText = aqiStack.addText(String(aqi))
 //     aqiText.font = Font.boldSystemFont(60)
@@ -75,16 +76,16 @@ function createSamllWidget() {
     aqiText.leftAlignText()
 
 //     widget.addSpacer()
-
+    
     let pollutantStack = widget.addStack()
-    pollutantStack.size = new Size(0, 20)
+    pollutantStack.size = new Size(0, 22)
     
     //   pollutantStack.setPadding(0, 10, 0, 10)
     pollutantStack.addSpacer(4)
     let pollutantText = pollutantStack.addText("PM2.5")
     pollutantText.font = Font.boldSystemFont(18)
     pollutantText.leftAlignText()
-    pollutantStack.addSpacer()
+//     pollutantStack.addSpacer()
 
 //     widget.addSpacer()
 
