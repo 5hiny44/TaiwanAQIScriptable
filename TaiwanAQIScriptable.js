@@ -1,7 +1,7 @@
 
 const API_URL = "https://data.epa.gov.tw/api/v2/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON";
-let demoData = {"records": [{"so2":"0.9","status":"普通","pm2.5":"21","pm10_avg":"35","siteid":"23","no2":"12.4","latitude":"24.74091408","wind_speed":"0.2","wind_direc":"89","o3_8hr":"60","sitename":"竹東","pollutant":"臭氧八小時","o3":"43.4","pm10":"35","nox":"13.1","no":"0.6","pm2.5_avg":"19","longitude":"121.08895493","county":"新竹縣","aqi":"67","co":"0.43","so2_avg":"0","publishtime":"2023/04/03 19:00:00","co_8hr":"0.3"}]}
-const aqi = 67
+const demoData = {"records": [{"so2":"0.9","status":"普通","pm2.5":"21","pm10_avg":"35","siteid":"23","no2":"12.4","latitude":"24.74091408","wind_speed":"0.2","wind_direc":"89","o3_8hr":"60","sitename":"竹東","pollutant":"臭氧八小時","o3":"43.4","pm10":"35","nox":"13.1","no":"0.6","pm2.5_avg":"19","longitude":"121.08895493","county":"新竹縣","aqi":"67","co":"0.43","so2_avg":"0","publishtime":"2023/04/03 19:00:00","co_8hr":"0.3"}]}
+const aqi = 90
 
 // await getData()
 // test json data
@@ -13,101 +13,102 @@ if (config.runsInWidget) {
 
 } else {
 
-    let widget = createSamllWidget()
+    const widget = createSamllWidget()
     widget.presentMedium()
 
 }
 
-function createWidget() {
+/**
+ * 依照 size 需求，生成 AQI 專用 widget 物件。
+ * 
+ * @param {String} size 預設偵測是否存在 widget 情境，自動偵測 widget size，也可自行輸入 size 大小，分別為: small、medium、large、extraLarge。
+ * @returns widge 物件。
+ */
+function createWidget(size = config.widgetFamily) {
 
-    const widgetSize = config.widgetFamily
+    const widgetSize = size || "small"
 
-    switch (widgetSize) {
-        case 'small':
-            return createSamllWidget()
-            break
-        
-        case 'medium':
-            return createSamllWidget()
-        //       return createMediumWidget()
-            break
-        
-        case 'large':
-            return createSamllWidget()
-        //       return createLargeWidget()
-            break
-        
-        default:
-            return createDefaultWidget()
-        
-    }
+    const widgeSizeMap = new Map([
+        ["small", createSamllWidget()],
+        ["medium", createMediumWidget()],
+        ["large", createLargeWidget()],
+        ["extraLarge", createExtraLargeWidget()]
+    ])
+    
+    const widget = widgeSizeMap.get(widgetSize)
+
+    if(!widget) { 
+        throw new Error(`Widget size mapping is failed. widgetSize: ${widgetSize}`)
+    } 
+    
+    return widget
 
 }
   
 function createSamllWidget() {
 
-    let widget = new ListWidget()
+    const widget = new ListWidget()
     
     widget.backgroundGradient = aqiBackgroundColor(aqi)
     
-    let titleStack = widget.addStack()
+    const titleStack = widget.addStack()
     titleStack.size = new Size(0, 14)
     //   titleStack.setPadding(0, 10, 0, 10)
     titleStack.topAlignContent()
-    let titleText = titleStack.addText("AQI 湖口")
+    const titleText = titleStack.addText("AQI 湖口")
     titleText.font = Font.boldSystemFont(12)
     titleText.leftAlignText()
     titleText.textOpacity = 0.7
     titleStack.addSpacer()
-    let locationText = titleStack.addText("☀️")
+    const locationText = titleStack.addText("☀️")
     locationText.font = Font.boldSystemFont(12)
     locationText.rightAlignText()
 
     //   widget.addSpacer()
 
-    let aqiStack = widget.addStack()
+    const aqiStack = widget.addStack()
     aqiStack.size = new Size(0, 64)
     
 //     aqiStack.setPadding(0, 100, 0, 0)
     aqiStack.topAlignContent()
-    let aqiText = aqiStack.addText(String(aqi))
+    const aqiText = aqiStack.addText(String(aqi))
 //     aqiText.font = Font.boldSystemFont(60)
     aqiText.font = Font.heavySystemFont(60)
     aqiText.leftAlignText()
 
 //     widget.addSpacer()
     
-    let pollutantStack = widget.addStack()
+    const pollutantStack = widget.addStack()
     pollutantStack.size = new Size(0, 22)
     
     //   pollutantStack.setPadding(0, 10, 0, 10)
     pollutantStack.addSpacer(4)
-    let pollutantText = pollutantStack.addText("PM2.5")
+    const pollutantText = pollutantStack.addText("PM2.5")
     pollutantText.font = Font.boldSystemFont(18)
     pollutantText.leftAlignText()
 //     pollutantStack.addSpacer()
 
 //     widget.addSpacer()
 
-    let otherTitleStack = widget.addStack()
+    const otherTitleStack = widget.addStack()
     otherTitleStack.size = new Size(0, 35)
     //   otherTitleStack.setPadding(0, 10, 0, 10)
 
-    let windStack = otherTitleStack.addStack()
+    const windStack = otherTitleStack.addStack()
 //     windStack.size = new Size(0, 10)
     windStack.bottomAlignContent()
     windStack.layoutVertically()
-    let windText = windStack.addText("東南風 ↖")
+    const windText = windStack.addText("東南風 ↖")
     windText.font = Font.boldSystemFont(11)
     windText.textOpacity = 0.7
 
-    let windText2 = windStack.addText("2.5 m/s")
+    const windText2 = windStack.addText("2.5 m/s")
     windText2.font = Font.boldSystemFont(11)
     windText2.textOpacity = 0.7
 
     otherTitleStack.addSpacer()
 
-    let updateTimeText = otherTitleStack.addText("14:30");
+    const updateTimeText = otherTitleStack.addText("14:30");
     updateTimeText.font = Font.boldSystemFont(11)
     updateTimeText.textOpacity = 0.7
     otherTitleStack.bottomAlignContent()
@@ -117,16 +118,17 @@ function createSamllWidget() {
 }
 
 function createMediumWidget() {
-
+    return createSamllWidget() //test
 }
 
 function createLargeWidget() {
-
+    return createSamllWidget() //test
 }
 
-function createDefaultWidget() {
-
+function createExtraLargeWidget() {
+    return createSamllWidget() //test
 }
+
 /**
  * 藉由aqi數值，生成對應空氣品質的背景。
  * 
@@ -145,8 +147,8 @@ function aqiBackgroundColor(aqi) {
         [100, {
             lightTopColorCode: "#c7cc35", 
             lightBottomColorCode: "#f2b844",
-            darkTopColorCode: "#4d4d02",
-            darkBottomColorCode: "#664705"
+            darkTopColorCode: "#a2a624",
+            darkBottomColorCode: "#bf8c26"
         }],
         [150, {
             lightTopColorCode: "#e3a00e", 
@@ -218,8 +220,8 @@ function getGradient(lightColorCodes = undefined, darkColorCodes = undefined, lo
   
 async function getData() {
 
-    let req = new Request(API_URL)
-    let json = await req.loadJSON()
+    const req = new Request(API_URL)
+    const json = await req.loadJSON()
 
     try {
         console.log(json)
@@ -229,6 +231,4 @@ async function getData() {
     }
 
 }  
-
-  
   
