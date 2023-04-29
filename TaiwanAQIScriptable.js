@@ -1,6 +1,244 @@
 
 const API_URL = "https://data.epa.gov.tw/api/v2/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON";
-const demoData = {"records": [{"so2":"0.9","status":"普通","pm2.5":"21","pm10_avg":"35","siteid":"23","no2":"12.4","latitude":"24.74091408","wind_speed":"0.2","wind_direc":"89","o3_8hr":"60","sitename":"竹東","pollutant":"臭氧八小時","o3":"43.4","pm10":"35","nox":"13.1","no":"0.6","pm2.5_avg":"19","longitude":"121.08895493","county":"新竹縣","aqi":"67","co":"0.43","so2_avg":"0","publishtime":"2023/04/03 19:00:00","co_8hr":"0.3"}]}
+const demoData = {
+    "fields": [
+        {
+            "id": "sitename",
+            "type": "text",
+            "info": {
+                "label": "測站名稱"
+            }
+        },
+        {
+            "id": "county",
+            "type": "text",
+            "info": {
+                "label": "縣市"
+            }
+        },
+        {
+            "id": "aqi",
+            "type": "text",
+            "info": {
+                "label": "空氣品質指標"
+            }
+        },
+        {
+            "id": "pollutant",
+            "type": "text",
+            "info": {
+                "label": "空氣污染指標物"
+            }
+        },
+        {
+            "id": "status",
+            "type": "text",
+            "info": {
+                "label": "狀態"
+            }
+        },
+        {
+            "id": "so2",
+            "type": "text",
+            "info": {
+                "label": "二氧化硫(ppb)"
+            }
+        },
+        {
+            "id": "co",
+            "type": "text",
+            "info": {
+                "label": "一氧化碳(ppm)"
+            }
+        },
+        {
+            "id": "o3",
+            "type": "text",
+            "info": {
+                "label": "臭氧(ppb)"
+            }
+        },
+        {
+            "id": "o3_8hr",
+            "type": "text",
+            "info": {
+                "label": "臭氧8小時移動平均(ppb)"
+            }
+        },
+        {
+            "id": "pm10",
+            "type": "text",
+            "info": {
+                "label": "懸浮微粒(μg\/m3)"
+            }
+        },
+        {
+            "id": "pm2.5",
+            "type": "text",
+            "info": {
+                "label": "細懸浮微粒(μg\/m3)"
+            }
+        },
+        {
+            "id": "no2",
+            "type": "text",
+            "info": {
+                "label": "二氧化氮(ppb)"
+            }
+        },
+        {
+            "id": "nox",
+            "type": "text",
+            "info": {
+                "label": "氮氧化物(ppb)"
+            }
+        },
+        {
+            "id": "no",
+            "type": "text",
+            "info": {
+                "label": "一氧化氮(ppb)"
+            }
+        },
+        {
+            "id": "wind_speed",
+            "type": "text",
+            "info": {
+                "label": "風速(m\/sec)"
+            }
+        },
+        {
+            "id": "wind_direc",
+            "type": "text",
+            "info": {
+                "label": "風向(degrees)"
+            }
+        },
+        {
+            "id": "publishtime",
+            "type": "text",
+            "info": {
+                "label": "資料發布時間"
+            }
+        },
+        {
+            "id": "co_8hr",
+            "type": "text",
+            "info": {
+                "label": "一氧化碳8小時移動平均(ppm)"
+            }
+        },
+        {
+            "id": "pm2.5_avg",
+            "type": "text",
+            "info": {
+                "label": "細懸浮微粒移動平均值(μg\/m3)"
+            }
+        },
+        {
+            "id": "pm10_avg",
+            "type": "text",
+            "info": {
+                "label": "懸浮微粒移動平均值(μg\/m3)"
+            }
+        },
+        {
+            "id": "so2_avg",
+            "type": "text",
+            "info": {
+                "label": "二氧化硫移動平均值(ppb)"
+            }
+        },
+        {
+            "id": "longitude",
+            "type": "text",
+            "info": {
+                "label": "經度"
+            }
+        },
+        {
+            "id": "latitude",
+            "type": "text",
+            "info": {
+                "label": "緯度"
+            }
+        },
+        {
+            "id": "siteid",
+            "type": "text",
+            "info": {
+                "label": "測站編號"
+            }
+        }
+    ],
+    "resource_id": "8d2f907f-bbb4-4fdf-8f08-8eabae15da45",
+    "__extras": {
+        "api_key": "e8dd42e6-9b8b-43f8-991e-b3dee723a52d"
+    },
+    "include_total": true,
+    "total": "85",
+    "resource_format": "object",
+    "limit": "1000",
+    "offset": "0",
+    "_links": {
+        "start": "\/api\/v2\/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON",
+        "next": "\/api\/v2\/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON&offset=1000"
+    },
+    "records": [
+        {
+            "sitename": "基隆",
+            "county": "基隆市",
+            "aqi": "84",
+            "pollutant": "臭氧八小時",
+            "status": "普通",
+            "so2": "1.1",
+            "co": "0.4",
+            "o3": "81.6",
+            "o3_8hr": "65.5",
+            "pm10": "33",
+            "pm2.5": "26",
+            "no2": "7.2",
+            "nox": "7.9",
+            "no": "0.7",
+            "wind_speed": "0.9",
+            "wind_direc": "87",
+            "publishtime": "2023\/04\/29 16:00:00",
+            "co_8hr": "0.3",
+            "pm2.5_avg": "21",
+            "pm10_avg": "27",
+            "so2_avg": "0",
+            "longitude": "121.760056",
+            "latitude": "25.129167",
+            "siteid": "1"
+        },
+        {
+            "sitename": "汐止",
+            "county": "新北市",
+            "aqi": "97",
+            "pollutant": "臭氧八小時",
+            "status": "普通",
+            "so2": "2.8",
+            "co": "0.35",
+            "o3": "64.8",
+            "o3_8hr": "69.3",
+            "pm10": "26",
+            "pm2.5": "19",
+            "no2": "11.3",
+            "nox": "12.7",
+            "no": "1.3",
+            "wind_speed": "0.5",
+            "wind_direc": "18",
+            "publishtime": "2023\/04\/29 16:00:00",
+            "co_8hr": "0.4",
+            "pm2.5_avg": "18",
+            "pm10_avg": "28",
+            "so2_avg": "2",
+            "longitude": "121.64081",
+            "latitude": "25.06624",
+            "siteid": "2"
+        }
+    ]
+}
 const aqi = 90
 
 // await getData()
