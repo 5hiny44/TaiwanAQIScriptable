@@ -1,244 +1,19 @@
 
-const API_URL = "https://data.epa.gov.tw/api/v2/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON";
-const demoData = {
-    "fields": [
-        {
-            "id": "sitename",
-            "type": "text",
-            "info": {
-                "label": "測站名稱"
-            }
-        },
-        {
-            "id": "county",
-            "type": "text",
-            "info": {
-                "label": "縣市"
-            }
-        },
-        {
-            "id": "aqi",
-            "type": "text",
-            "info": {
-                "label": "空氣品質指標"
-            }
-        },
-        {
-            "id": "pollutant",
-            "type": "text",
-            "info": {
-                "label": "空氣污染指標物"
-            }
-        },
-        {
-            "id": "status",
-            "type": "text",
-            "info": {
-                "label": "狀態"
-            }
-        },
-        {
-            "id": "so2",
-            "type": "text",
-            "info": {
-                "label": "二氧化硫(ppb)"
-            }
-        },
-        {
-            "id": "co",
-            "type": "text",
-            "info": {
-                "label": "一氧化碳(ppm)"
-            }
-        },
-        {
-            "id": "o3",
-            "type": "text",
-            "info": {
-                "label": "臭氧(ppb)"
-            }
-        },
-        {
-            "id": "o3_8hr",
-            "type": "text",
-            "info": {
-                "label": "臭氧8小時移動平均(ppb)"
-            }
-        },
-        {
-            "id": "pm10",
-            "type": "text",
-            "info": {
-                "label": "懸浮微粒(μg\/m3)"
-            }
-        },
-        {
-            "id": "pm2.5",
-            "type": "text",
-            "info": {
-                "label": "細懸浮微粒(μg\/m3)"
-            }
-        },
-        {
-            "id": "no2",
-            "type": "text",
-            "info": {
-                "label": "二氧化氮(ppb)"
-            }
-        },
-        {
-            "id": "nox",
-            "type": "text",
-            "info": {
-                "label": "氮氧化物(ppb)"
-            }
-        },
-        {
-            "id": "no",
-            "type": "text",
-            "info": {
-                "label": "一氧化氮(ppb)"
-            }
-        },
-        {
-            "id": "wind_speed",
-            "type": "text",
-            "info": {
-                "label": "風速(m\/sec)"
-            }
-        },
-        {
-            "id": "wind_direc",
-            "type": "text",
-            "info": {
-                "label": "風向(degrees)"
-            }
-        },
-        {
-            "id": "publishtime",
-            "type": "text",
-            "info": {
-                "label": "資料發布時間"
-            }
-        },
-        {
-            "id": "co_8hr",
-            "type": "text",
-            "info": {
-                "label": "一氧化碳8小時移動平均(ppm)"
-            }
-        },
-        {
-            "id": "pm2.5_avg",
-            "type": "text",
-            "info": {
-                "label": "細懸浮微粒移動平均值(μg\/m3)"
-            }
-        },
-        {
-            "id": "pm10_avg",
-            "type": "text",
-            "info": {
-                "label": "懸浮微粒移動平均值(μg\/m3)"
-            }
-        },
-        {
-            "id": "so2_avg",
-            "type": "text",
-            "info": {
-                "label": "二氧化硫移動平均值(ppb)"
-            }
-        },
-        {
-            "id": "longitude",
-            "type": "text",
-            "info": {
-                "label": "經度"
-            }
-        },
-        {
-            "id": "latitude",
-            "type": "text",
-            "info": {
-                "label": "緯度"
-            }
-        },
-        {
-            "id": "siteid",
-            "type": "text",
-            "info": {
-                "label": "測站編號"
-            }
-        }
-    ],
-    "resource_id": "8d2f907f-bbb4-4fdf-8f08-8eabae15da45",
-    "__extras": {
-        "api_key": "e8dd42e6-9b8b-43f8-991e-b3dee723a52d"
-    },
-    "include_total": true,
-    "total": "85",
-    "resource_format": "object",
-    "limit": "1000",
-    "offset": "0",
-    "_links": {
-        "start": "\/api\/v2\/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON",
-        "next": "\/api\/v2\/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON&offset=1000"
-    },
-    "records": [
-        {
-            "sitename": "基隆",
-            "county": "基隆市",
-            "aqi": "84",
-            "pollutant": "臭氧八小時",
-            "status": "普通",
-            "so2": "1.1",
-            "co": "0.4",
-            "o3": "81.6",
-            "o3_8hr": "65.5",
-            "pm10": "33",
-            "pm2.5": "26",
-            "no2": "7.2",
-            "nox": "7.9",
-            "no": "0.7",
-            "wind_speed": "0.9",
-            "wind_direc": "87",
-            "publishtime": "2023\/04\/29 16:00:00",
-            "co_8hr": "0.3",
-            "pm2.5_avg": "21",
-            "pm10_avg": "27",
-            "so2_avg": "0",
-            "longitude": "121.760056",
-            "latitude": "25.129167",
-            "siteid": "1"
-        },
-        {
-            "sitename": "汐止",
-            "county": "新北市",
-            "aqi": "97",
-            "pollutant": "臭氧八小時",
-            "status": "普通",
-            "so2": "2.8",
-            "co": "0.35",
-            "o3": "64.8",
-            "o3_8hr": "69.3",
-            "pm10": "26",
-            "pm2.5": "19",
-            "no2": "11.3",
-            "nox": "12.7",
-            "no": "1.3",
-            "wind_speed": "0.5",
-            "wind_direc": "18",
-            "publishtime": "2023\/04\/29 16:00:00",
-            "co_8hr": "0.4",
-            "pm2.5_avg": "18",
-            "pm10_avg": "28",
-            "so2_avg": "2",
-            "longitude": "121.64081",
-            "latitude": "25.06624",
-            "siteid": "2"
-        }
-    ]
-}
+const isRemoteUpdateEnabled = false
+const isUpdateAQIJSONData = false
+
+
+const SCRIPT_URL = "https://raw.githubusercontent.com/5hiny44/TaiwanAQIScriptable/main/TaiwanAQIScriptable.js"
+const TAIWAN_AQI_URL = "https://data.epa.gov.tw/api/v2/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON"
+const SCRIPT_NAME = Script.name() + ".js"
+const DATA_JSON_NAME = "TaiwanAQIData.json"
+const FM = getFileManager()
+const PATH = FM.documentsDirectory()
+const SCRIPT_PATH = createFilePath(SCRIPT_NAME)
+const AQI_DATA_PATH = createFilePath("TaiwanAQIData.json")
+
+//test params
+const demoData = FM.readString(AQI_DATA_PATH)
 const aqi = 90
 
 // await getData()
@@ -251,8 +26,109 @@ if (config.runsInWidget) {
 
 } else {
 
+    if(isRemoteUpdateEnabled) {
+        await updateLocalScript()
+    }
+
+    if(isUpdateAQIJSONData) {
+        await updateLocalAQIData()
+    }
+
     const widget = createSamllWidget()
     widget.presentMedium()
+
+}
+
+/**
+ * 更新本地腳本。
+ */
+async function updateLocalScript() {
+
+    console.log("Update Script...")
+
+    let req = new Request(SCRIPT_URL)
+    let str = await req.loadString()
+    FM.writeString(SCRIPT_PATH, str)
+
+    console.log("Script have been Updated.")
+    
+}
+
+/**
+ * 更新本地 AQI 的資料。
+ */
+async function updateLocalAQIData() {
+
+    console.log("Update AQI JSON Data...")
+
+    const req = new Request(TAIWAN_AQI_URL)
+    const str = await req.loadString()
+    FM.writeString(AQI_DATA_PATH, str)
+
+    console.log("AQI JSON Data have been Updated.")
+    
+}
+
+/**
+ * 依照用戶 Scriptable 所使用路徑，建立相對應的檔案名稱與路徑。
+ * 
+ * @param {String} fileName 檔案名稱，必須包含副檔名。（ex. TaiwanAQIScriptable.js）
+ * @returns 
+ */
+function createFilePath(fileName) {
+    
+    const filePath = PATH + "/" +  fileName
+    
+    // if(!FM.fileExists(filePath)) {
+    //     console.log(`Check path of file. Path: ${filePath}`)
+    //     return null
+    // }
+
+    return filePath
+    
+}
+
+/**
+ * 測試用戶是否開啟iCloud，得以取用有效 FileManager。
+ * 
+ * @returns {FileManager}
+ */
+function getFileManager() {
+
+    try {
+
+        const iCloudFm = FileManager.iCloud() // <-- 有沒有開啟iCloud都不會報錯
+        iCloudFm.documentsDirectory() // <-- iCloud 沒開啟會報錯
+        return iCloudFm
+
+    } catch(e) {
+
+        console.log("Getting the directory from iCloud failed. Check your iCloud Setting.")
+        
+        const localFm = FileManager.local()  
+        return localFm
+
+    }
+
+}
+
+
+/**
+ * 取得監測站名稱。
+ * 
+ * @param {Number} longitude 經度。
+ * @param {Number} latitude 緯度。
+ */
+function getCounty(longitude, latitude) {
+
+}
+
+/**
+ * 取得該監測站的 AQI 資料。
+ * 
+ * @param {String} sitename 
+ */
+function getAQIData(sitename) {
 
 }
 
