@@ -46,8 +46,8 @@ async function updateLocalScript() {
 
     console.log("Update Script...")
 
-    let req = new Request(SCRIPT_URL)
-    let str = await req.loadString()
+    const req = new Request(SCRIPT_URL)
+    const str = await req.loadString()
     FM.writeString(SCRIPT_PATH, str)
 
     console.log("Script have been Updated.")
