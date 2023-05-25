@@ -136,30 +136,30 @@ function getDataJSONObject() {
     const dataPath = getFilePath(DATA_JSON_NAME)
     const dataStr = FM.readString(dataPath)
 
-    return  JSON.parse(dataStr)
+    return JSON.parse(dataStr)
 
 }
 
 /**
  * 取得 AQI 資料中的參數中文名稱。
  * 
- * @returns {Map}
+ * @returns {Object}
  */
-function getAQILabelMap() {
+function getAQILabelObj() {
 
-    const map = new Map()
+    const obj = {}
 
-    const obj = getDataJSONObject()
-    const ary = obj["fields"]
+    const dataObj = getDataJSONObject()
+    const ary = dataObj["fields"]
 
     ary.forEach(element => {
         const key = element["id"]
         const value = element["info"]["label"]
 
-        map.set(key, value)
+        obj[key] = value
     })
 
-    return map    
+    return obj    
 
 }
 
@@ -390,17 +390,17 @@ function getGradient(lightColorCodes = undefined, darkColorCodes = undefined, lo
 }
 
   
-async function getData() {
+// async function getData() {
 
-    const req = new Request(API_URL)
-    const json = await req.loadJSON()
+//     const req = new Request(API_URL)
+//     const json = await req.loadJSON()
 
-    try {
-        console.log(json)
-    } catch(error) {
-        console.log(error)
-        throw error
-    }
+//     try {
+//         console.log(json)
+//     } catch(error) {
+//         console.log(error)
+//         throw error
+//     }
 
-}  
+// }  
   
