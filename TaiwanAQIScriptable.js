@@ -126,14 +126,40 @@ function getFileManager() {
 
 }
 
+/**
+ * 從路徑裡的 AQI Data JSON 檔案，打包出 Object。
+ * 
+ * @returns {Object}
+ */
+function getDataJSONObject() {
+
+    const dataPath = getFilePath(DATA_JSON_NAME)
+    const dataStr = FM.readString(dataPath)
+
+    return  JSON.parse(dataStr)
+
+}
 
 /**
- * 取得監測站名稱。
+ * 取得 AQI 資料中的參數中文名稱。
  * 
- * @param {Number} longitude 經度。
- * @param {Number} latitude 緯度。
+ * @returns {Map}
  */
-function getCounty(longitude, latitude) {
+function getAQILabelMap() {
+
+    const map = new Map()
+
+    const obj = getDataJSONObject()
+    const ary = obj["fields"]
+
+    ary.forEach(element => {
+        const key = element["id"]
+        const value = element["info"]["label"]
+
+        map.set(key, value)
+    })
+
+    return map    
 
 }
 
@@ -142,7 +168,25 @@ function getCounty(longitude, latitude) {
  * 
  * @param {String} sitename 
  */
-function getAQIData(sitename) {
+function getAQIRecords(sitename) {
+
+}
+
+/**
+ * 取得監測站名稱。
+ * 
+ * @param {Number} longitude 經度。
+ * @param {Number} latitude 緯度。
+ */
+function getNearAQISite(longitude, latitude) {
+
+    // const posObj = {
+    //     "latitude":24.831789345495963,
+    //     "altitude":37.497130625881255,
+    //     "horizontalAccuracy":4.585110151526686,
+    //     "longitude":121.01288734015172,
+    //     "verticalAccuracy":3.5778907097835964
+    // }
 
 }
 
