@@ -1,38 +1,43 @@
 
-const isRemoteUpdateEnabled = false
+const isRemoteScriptUpdateEnabled = false
 const isUpdateAQIJSONData = false
 
+const BRANCH = "main"
 
-const SCRIPT_URL = "https://raw.githubusercontent.com/5hiny44/TaiwanAQIScriptable/main/TaiwanAQIScriptable.js"
+const SCRIPT_URL = `https://raw.githubusercontent.com/5hiny44/TaiwanAQIScriptable/${BRANCH}/TaiwanAQIScriptable.js`
 const TAIWAN_AQI_URL = "https://data.epa.gov.tw/api/v2/aqx_p_432?api_key=e8dd42e6-9b8b-43f8-991e-b3dee723a52d&limit=1000&format=JSON"
+
+const scriptUpdateCycleTime = "00:00:00"
+const aqiDataUpdateCycleTime = "**:01:00"
+
 const SCRIPT_NAME = Script.name() + ".js"
 const DATA_JSON_NAME = "TaiwanAQIData.json"
 const FM = getFileManager()
 const PATH = FM.documentsDirectory()
-const SCRIPT_PATH = createFilePath(SCRIPT_NAME)
-const AQI_DATA_PATH = createFilePath("TaiwanAQIData.json")
 
 //test params
-const demoData = FM.readString(AQI_DATA_PATH)
+const demoData = JSON.parse(FM.readString(getFilePath(DATA_JSON_NAME)))
 const aqi = 90
 
 // await getData()
 // test json data
 // console.log(demoData["records"][0])
+
+if(isRemoteScriptUpdateEnabled) {
+    // scriptUpdateCycleTime 定時
+    await updateLocalScript()
+}
+
+if(isUpdateAQIJSONData) {
+    // aqiDataUpdateCycleTime 定時
+    await updateLocalAQIData()
+}
   
 if (config.runsInWidget) {
   
     Script.setWidget(createWidget())
 
 } else {
-
-    if(isRemoteUpdateEnabled) {
-        await updateLocalScript()
-    }
-
-    if(isUpdateAQIJSONData) {
-        await updateLocalAQIData()
-    }
 
     const widget = createSamllWidget()
     widget.presentMedium()
@@ -46,9 +51,10 @@ async function updateLocalScript() {
 
     console.log("Update Script...")
 
+    const scriptPath = getFilePath(SCRIPT_NAME)
     const req = new Request(SCRIPT_URL)
     const str = await req.loadString()
-    FM.writeString(SCRIPT_PATH, str)
+    FM.writeString(scriptPath, str)
 
     console.log("Script have been Updated.")
     
@@ -61,9 +67,11 @@ async function updateLocalAQIData() {
 
     console.log("Update AQI JSON Data...")
 
+    const dataPath = getFilePath(DATA_JSON_NAME)||PATH + "/TaiwanAQIScript/" + DATA_JSON_NAME
+
     const req = new Request(TAIWAN_AQI_URL)
     const str = await req.loadString()
-    FM.writeString(AQI_DATA_PATH, str)
+    FM.writeString(dataPath, str)
 
     console.log("AQI JSON Data have been Updated.")
     
@@ -85,6 +93,25 @@ function createFilePath(fileName) {
     // }
 
     return filePath
+    
+}
+
+function getFilePath(fileName) {
+    
+    const filePath1 = PATH + "/" + fileName
+    const filePath2 = PATH + "/TaiwanAQIScript/" + fileName
+    
+    if(FM.fileExists(filePath1)) {
+        return filePath1
+    }
+
+    if(FM.fileExists(filePath2)) {
+        return filePath2
+    }
+
+    console.log(`The file is not exist.`)
+
+    return null
     
 }
 
