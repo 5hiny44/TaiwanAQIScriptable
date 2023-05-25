@@ -78,24 +78,11 @@ async function updateLocalAQIData() {
 }
 
 /**
- * 依照用戶 Scriptable 所使用路徑，建立相對應的檔案名稱與路徑。
+ * 在用戶 Scriptable 路徑裡，確認檔案是否存在，並且回傳路徑。如果檔案不存在，則回傳 null。
  * 
  * @param {String} fileName 檔案名稱，必須包含副檔名。（ex. TaiwanAQIScriptable.js）
- * @returns 
+ * @returns {String?}
  */
-function createFilePath(fileName) {
-    
-    const filePath = PATH + "/" +  fileName
-    
-    // if(!FM.fileExists(filePath)) {
-    //     console.log(`Check path of file. Path: ${filePath}`)
-    //     return null
-    // }
-
-    return filePath
-    
-}
-
 function getFilePath(fileName) {
     
     const filePath1 = PATH + "/" + fileName
