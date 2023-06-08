@@ -1,6 +1,6 @@
 
 const isRemoteScriptUpdateEnabled = false
-const isUpdateAQIJSONData = false
+const isUpdateAQIJsonData = false
 
 const BRANCH = "main"
 
@@ -18,6 +18,11 @@ const PATH = FM.documentsDirectory()
 //test params
 const demoData = JSON.parse(FM.readString(getFilePath(DATA_JSON_NAME)))
 const aqi = 90
+const time = function() {
+    const date = new Date()
+    return `${date.getHours()}:${date.getMinutes()}` // <<< 格式未正確，會出現 14:1 。
+    // ex. 14:30
+}()
 
 // await getData()
 // test json data
@@ -28,7 +33,7 @@ if(isRemoteScriptUpdateEnabled) {
     await updateLocalScript()
 }
 
-if(isUpdateAQIJSONData) {
+if(isUpdateAQIJsonData) {
     // aqiDataUpdateCycleTime 定時
     await updateLocalAQIData()
 }
@@ -67,7 +72,8 @@ async function updateLocalAQIData() {
 
     console.log("Update AQI JSON Data...")
 
-    const dataPath = getFilePath(DATA_JSON_NAME)||PATH + "/TaiwanAQIScript/" + DATA_JSON_NAME
+    const dataPath = getFilePath(DATA_JSON_NAME)||`${PATH}/TaiwanAQIScript/${DATA_JSON_NAME}` 
+    // 無法取得檔案位置，則直接以 ${PATH}/TaiwanAQIScript/${DATA_JSON_NAME} 建立新的檔案。
 
     const req = new Request(TAIWAN_AQI_URL)
     const str = await req.loadString()
@@ -131,7 +137,7 @@ function getFileManager() {
  * 
  * @returns {Object}
  */
-function getDataJSONObject() {
+function getObjectFromJsonFile() {
 
     const dataPath = getFilePath(DATA_JSON_NAME)
     const dataStr = FM.readString(dataPath)
@@ -149,7 +155,7 @@ function getAQILabelObj() {
 
     const obj = {}
 
-    const dataObj = getDataJSONObject()
+    const dataObj = getObjectFromJsonFile()
     const ary = dataObj["fields"]
 
     ary.forEach(element => {
@@ -178,7 +184,7 @@ function getAQIRecords(sitename) {
  * @param {Number} longitude 經度。
  * @param {Number} latitude 緯度。
  */
-function getNearAQISite(longitude, latitude) {
+async function getNearAQISiteName(longitude, latitude) {
 
     // const posObj = {
     //     "latitude":24.831789345495963,
@@ -187,6 +193,9 @@ function getNearAQISite(longitude, latitude) {
     //     "longitude":121.01288734015172,
     //     "verticalAccuracy":3.5778907097835964
     // }
+
+    const geographicCoordinate = await Location.current()
+
 
 }
 
@@ -280,7 +289,7 @@ function createSamllWidget() {
 
     otherTitleStack.addSpacer()
 
-    const updateTimeText = otherTitleStack.addText("14:30");
+    const updateTimeText = otherTitleStack.addText(time);
     updateTimeText.font = Font.boldSystemFont(11)
     updateTimeText.textOpacity = 0.7
     otherTitleStack.bottomAlignContent()
@@ -389,18 +398,4 @@ function getGradient(lightColorCodes = undefined, darkColorCodes = undefined, lo
   
 }
 
-  
-// async function getData() {
-
-//     const req = new Request(API_URL)
-//     const json = await req.loadJSON()
-
-//     try {
-//         console.log(json)
-//     } catch(error) {
-//         console.log(error)
-//         throw error
-//     }
-
-// }  
   
