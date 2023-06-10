@@ -147,59 +147,6 @@ function getObjectFromJsonFile() {
 }
 
 /**
- * 取得 AQI 資料中的參數中文名稱。
- * 
- * @returns {Object}
- */
-function getAQILabelObj() {
-
-    const obj = {}
-
-    const dataObj = getObjectFromJsonFile()
-    const ary = dataObj["fields"]
-
-    ary.forEach(element => {
-        const key = element["id"]
-        const value = element["info"]["label"]
-
-        obj[key] = value
-    })
-
-    return obj    
-
-}
-
-/**
- * 取得該監測站的 AQI 資料。
- * 
- * @param {String} sitename 
- */
-function getAQIRecords(sitename) {
-
-}
-
-/**
- * 取得監測站名稱。
- * 
- * @param {Number} longitude 經度。
- * @param {Number} latitude 緯度。
- */
-async function getNearAQISiteName(longitude, latitude) {
-
-    // const posObj = {
-    //     "latitude":24.831789345495963,
-    //     "altitude":37.497130625881255,
-    //     "horizontalAccuracy":4.585110151526686,
-    //     "longitude":121.01288734015172,
-    //     "verticalAccuracy":3.5778907097835964
-    // }
-
-    const geographicCoordinate = await Location.current()
-
-
-}
-
-/**
  * 依照 size 需求，生成 AQI 專用 widget 物件。
  * 
  * @param {String} size 預設偵測是否存在 widget 情境，自動偵測 widget size，也可自行輸入 size 大小，分別為: small、medium、large、extraLarge。
