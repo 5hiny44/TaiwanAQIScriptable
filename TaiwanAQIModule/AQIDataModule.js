@@ -26,7 +26,7 @@ class AQIData {
      * 
      * @returns {Object}
      */
-    async getNearAQISiteObj(longitude, latitude) {
+    getNearAQISiteObj(longitude, latitude) {
 
         // const geographicCoordinate = await Location.current()
         // 物件 Demo
@@ -40,21 +40,20 @@ class AQIData {
 
         const recordsArray = this.records
 
-        const site = recordsArray.reduce((accumulator, currentValue, currentIndex, array) => {
+        const gpsCoordinate = new Coordinate(longitude, latitude)
+        const siteData = recordsArray.reduce((accumulator, currentValue, currentIndex, array) => {
 
-            const longitudeDistance1 = longitude - accumulator["longitude"]
-            const latitudeDistance1 = latitude - accumulator["latitude"]
-            const distance1 = Math.pow(longitudeDistance1, 2) + Math.pow(latitudeDistance1, 2)
+            const bestCoordinate = new Coordinate(accumulator["longitude"], accumulator["latitude"])
+            const currentCoordinate = new Coordinate(currentValue["longitude"], currentValue["latitude"])
 
-            const longitudeDistance2 = longitude - currentValue["longitude"]
-            const latitudeDistance2 = latitude - currentValue["latitude"]
-            const distance2 = Math.pow(longitudeDistance2, 2) + Math.pow(latitudeDistance2, 2)
-
-            return (distance1>distance2)?accumulator:currentValue
+            const bestDistance = Coordinate.getDistance(gpsCoordinate, bestCoordinate)
+            const currentDistance = Coordinate.getDistance(gpsCoordinate, currentCoordinate)
+            
+            return (bestDistance<currentDistance)?accumulator:currentValue
 
         })
 
-        return site
+        return siteData
 
     }
 
@@ -97,8 +96,35 @@ class AQIData {
 
 }
 
+class Coordinate {
+
+    constructor(longitude, latitude) {
+        this.longitude = longitude
+        this.latitude = latitude
+    }
+
+    /**
+     * 計算出兩點座標的距離。
+     * 
+     * @param {Coordinate} coordinate1 
+     * @param {Coordinate} coordinate2 
+     * @returns {Number}
+     */
+    static getDistance(coordinate1, coordinate2) {
+
+        const longitudeDistance1 = coordinate1.longitude - coordinate2.longitude
+        const latitudeDistance1 = coordinate1.latitude - coordinate2.latitude
+        const distance = Math.pow(longitudeDistance1, 2) + Math.pow(latitudeDistance1, 2)
+
+        return distance
+
+    }
+
+}
+
 module.exports = {
 
-    AQIData
+    AQIData,
+    Coordinate
 
 }
