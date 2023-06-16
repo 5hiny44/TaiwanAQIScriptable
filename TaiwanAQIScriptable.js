@@ -30,12 +30,12 @@ const time = function() {
 
 if(isRemoteScriptUpdateEnabled) {
     // scriptUpdateCycleTime 定時
-    await updateLocalScript()
+    updateLocalScript()
 }
 
 if(isUpdateAQIJsonData) {
     // aqiDataUpdateCycleTime 定時
-    await updateLocalAQIData()
+    updateLocalAQIData()
 }
   
 if (config.runsInWidget) {
