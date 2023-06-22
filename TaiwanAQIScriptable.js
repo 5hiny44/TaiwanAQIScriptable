@@ -19,9 +19,9 @@ const PATH = FM.documentsDirectory()
 const demoData = JSON.parse(FM.readString(getFilePath(DATA_JSON_NAME)))
 const aqi = 90
 const time = function() {
-    const date = new Date()
-    return `${date.getHours()}:${date.getMinutes()}` // <<< 格式未正確，會出現 14:1 。
-    // ex. 14:30
+  const date = new Date()
+  return `${date.getHours()}:${date.getMinutes()}` // <<< 格式未正確，會出現 14:1 。
+  // ex. 14:30
 }()
 
 // await getData()
@@ -29,23 +29,23 @@ const time = function() {
 // console.log(demoData["records"][0])
 
 if(isRemoteScriptUpdateEnabled) {
-    // scriptUpdateCycleTime 定時
-    updateLocalScript()
+  // scriptUpdateCycleTime 定時
+  updateLocalScript()
 }
 
 if(isUpdateAQIJsonData) {
-    // aqiDataUpdateCycleTime 定時
-    updateLocalAQIData()
+  // aqiDataUpdateCycleTime 定時
+  updateLocalAQIData()
 }
-  
+
 if (config.runsInWidget) {
-  
-    Script.setWidget(createWidget())
+
+  Script.setWidget(createWidget())
 
 } else {
 
-    const widget = createSamllWidget()
-    widget.presentMedium()
+  const widget = createSamllWidget()
+  widget.presentMedium()
 
 }
 
@@ -54,15 +54,15 @@ if (config.runsInWidget) {
  */
 async function updateLocalScript() {
 
-    console.log("Update Script...")
+  console.log("Update Script...")
 
-    const scriptPath = getFilePath(SCRIPT_NAME)
-    const req = new Request(SCRIPT_URL)
-    const str = await req.loadString()
-    FM.writeString(scriptPath, str)
+  const scriptPath = getFilePath(SCRIPT_NAME)
+  const req = new Request(SCRIPT_URL)
+  const str = await req.loadString()
+  FM.writeString(scriptPath, str)
 
-    console.log("Script have been Updated.")
-    
+  console.log("Script have been Updated.")
+  
 }
 
 /**
@@ -70,17 +70,17 @@ async function updateLocalScript() {
  */
 async function updateLocalAQIData() {
 
-    console.log("Update AQI JSON Data...")
+  console.log("Update AQI JSON Data...")
 
-    const dataPath = getFilePath(DATA_JSON_NAME)||`${PATH}/TaiwanAQIScript/${DATA_JSON_NAME}` 
-    // 無法取得檔案位置，則直接以 ${PATH}/TaiwanAQIScript/${DATA_JSON_NAME} 建立新的檔案。
+  const dataPath = getFilePath(DATA_JSON_NAME)||`${PATH}/TaiwanAQIScript/${DATA_JSON_NAME}` 
+  // 無法取得檔案位置，則直接以 ${PATH}/TaiwanAQIScript/${DATA_JSON_NAME} 建立新的檔案。
 
-    const req = new Request(TAIWAN_AQI_URL)
-    const str = await req.loadString()
-    FM.writeString(dataPath, str)
+  const req = new Request(TAIWAN_AQI_URL)
+  const str = await req.loadString()
+  FM.writeString(dataPath, str)
 
-    console.log("AQI JSON Data have been Updated.")
-    
+  console.log("AQI JSON Data have been Updated.")
+  
 }
 
 /**
@@ -90,22 +90,22 @@ async function updateLocalAQIData() {
  * @returns {String?}
  */
 function getFilePath(fileName) {
-    
-    const filePath1 = PATH + "/" + fileName
-    const filePath2 = PATH + "/TaiwanAQIScript/" + fileName
-    
-    if(FM.fileExists(filePath1)) {
-        return filePath1
-    }
+  
+  const filePath1 = PATH + "/" + fileName
+  const filePath2 = PATH + "/TaiwanAQIScript/" + fileName
+  
+  if(FM.fileExists(filePath1)) {
+    return filePath1
+  }
 
-    if(FM.fileExists(filePath2)) {
-        return filePath2
-    }
+  if(FM.fileExists(filePath2)) {
+    return filePath2
+  }
 
-    console.log(`The file is not exist.`)
+  console.log(`The file is not exist.`)
 
-    return null
-    
+  return null
+  
 }
 
 /**
@@ -115,20 +115,20 @@ function getFilePath(fileName) {
  */
 function getFileManager() {
 
-    try {
+  try {
 
-        const iCloudFm = FileManager.iCloud() // <-- 有沒有開啟iCloud都不會報錯
-        iCloudFm.documentsDirectory() // <-- iCloud 沒開啟會報錯
-        return iCloudFm
+    const iCloudFm = FileManager.iCloud() // <-- 有沒有開啟iCloud都不會報錯
+    iCloudFm.documentsDirectory() // <-- iCloud 沒開啟會報錯
+    return iCloudFm
 
-    } catch(e) {
+  } catch(e) {
 
-        console.log("Getting the directory from iCloud failed. Check your iCloud Setting.")
-        
-        const localFm = FileManager.local()  
-        return localFm
+    console.log("Getting the directory from iCloud failed. Check your iCloud Setting.")
+    
+    const localFm = FileManager.local()  
+    return localFm
 
-    }
+  }
 
 }
 
@@ -139,10 +139,10 @@ function getFileManager() {
  */
 function getObjectFromJsonFile() {
 
-    const dataPath = getFilePath(DATA_JSON_NAME)
-    const dataStr = FM.readString(dataPath)
+  const dataPath = getFilePath(DATA_JSON_NAME)
+  const dataStr = FM.readString(dataPath)
 
-    return JSON.parse(dataStr)
+  return JSON.parse(dataStr)
 
 }
 
