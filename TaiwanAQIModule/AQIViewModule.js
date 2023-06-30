@@ -39,7 +39,7 @@ class AQIView {
       ["extraLarge", this.createExtraLargeWidget]
     ])
     
-    const widget = widgeSizeMap.get(widgetSize)(siteDataObj)
+    const widget = widgeSizeMap.get(widgetSize).bind(this)(siteDataObj)
 
     if(!widget) { 
       throw new Error(`Widget size mapping is failed. widgetSize: ${widgetSize}`)
